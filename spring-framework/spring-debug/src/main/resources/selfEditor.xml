@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context.xsd">
+	<context:component-scan base-package="com.lucky.entity"></context:component-scan>
+
+	<bean id="customer" class="com.lucky.extension.selfEditor.Customer">
+		<!--构造方法注入
+		<constructor-arg name="id" value="20"></constructor-arg>-->
+		<!-- set方法注入  -->
+		<property name="name" value="zhangSan"/>
+		<property name="address" value="广东省_深圳市_福田区"/>
+	</bean>
+	<bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+		<!--<property name="propertyEditorRegistrars">
+			<list>
+				<bean class="com.lucky.extension.selfEditor.AddressPropertyEditorRegistrar"></bean>
+			</list>
+		</property>-->
+
+		<property name="customEditors">
+			<map>
+				<entry key="com.lucky.extension.selfEditor.Address">
+					<value> com.lucky.extension.selfEditor.AddressPropertyEditor</value>
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<bean id="studentConverter" class="com.lucky.extension.selfConverter.StudentConverter"></bean>
+	<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+		<property name="converters">
+			<set>
+				<ref bean="studentConverter"></ref>
+			</set>
+		</property>
+	</bean>
+
+	<bean id="studentFactoryBean" class="com.lucky.extension.selfConverter.StudentFactoryBean"></bean>
+
+	<bean id="beforeInstantiation" class="com.lucky.extension.selfAware.BeforeInstantiation"></bean>
+
+	<bean id="myInstantiationAware" class="com.lucky.extension.selfAware.MyInstantiationAware"></bean>
+
+
+
+
+</beans>

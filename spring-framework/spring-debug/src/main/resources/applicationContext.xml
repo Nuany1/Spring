@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context.xsd">
+    <context:component-scan base-package="com.lucky">
+        <context:exclude-filter type="regex" expression="com.lucky.extension.*"/>
+    </context:component-scan>
+
+    <context:property-placeholder location="classpath:db.properties"/>
+
+    <bean id="person" class="com.lucky.entity.Person">
+        <property name="id" value="20"/>
+        <property name="name" value="zhangSan"/>
+        <property name="age" value=""/>
+    </bean>
+
+
+    <bean id="teacher" class="com.lucky.entity.Teacher">
+        <lookup-method bean="person" name="showMe"/>
+    </bean>
+</beans>
